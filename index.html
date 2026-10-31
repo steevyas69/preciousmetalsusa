@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Precious Metals USA</title>
+<meta name="description" content="Gem and precious metal appraisal. Contact contact@preciousmetalsusa.com">
+<style>
+  :root {
+    --navy: #14233c;
+    --ink: #1f2937;
+    --bg: #f4f6f9;
+    --tile: #e5e8ed;
+    --accent: #b08d3c;
+    --gap: 20px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .topbar { height: 6px; background: var(--navy); border-bottom: 3px solid var(--accent); }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 40px 20px 0; }
+
+  /* Golden shimmer border: a moving gold gradient shows through a 2px padding */
+  .card {
+    margin: 0;
+    padding: 2px;
+    background: linear-gradient(110deg, #8a6a22 0%, #e9d28a 25%, #b08d3c 50%, #f6e7b0 75%, #8a6a22 100%);
+    background-size: 300% 100%;
+    animation: shimmer 6s linear infinite;
+    box-shadow: 0 2px 8px rgba(20, 35, 60, .12);
+    transition: transform .35s ease, box-shadow .35s ease;
+  }
+  .card .frame { width: 100%; height: 100%; overflow: hidden; background: var(--tile); }
+  .card img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+    transition: transform .6s ease, filter .6s ease;
+  }
+  .card:hover, .card:focus-within {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(20, 35, 60, .22), 0 0 14px rgba(176, 141, 60, .45);
+  }
+  .card:hover img { transform: scale(1.06); filter: brightness(1.05) saturate(1.08); }
+
+  @keyframes shimmer {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+  }
+
+  .hero { margin-bottom: var(--gap); aspect-ratio: 21 / 8; max-height: 340px; width: 100%; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); }
+  .grid .card { aspect-ratio: 4 / 3; }
+
+  footer {
+    margin-top: 56px;
+    background: var(--navy);
+    border-top: 3px solid var(--accent);
+    text-align: center;
+    padding: 36px 16px;
+  }
+  footer a { color: #fff; font-size: 1.05rem; letter-spacing: .06em; text-decoration: none; transition: color .25s ease; }
+  footer a:hover, footer a:focus-visible { color: var(--accent); text-decoration: underline; }
+
+  @media (max-width: 800px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) {
+    .grid { grid-template-columns: 1fr; }
+    .hero { aspect-ratio: 16 / 9; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .card { animation: none; }
+    .card, .card img { transition: none; }
+    .card:hover, .card:hover img { transform: none; }
+  }
+</style>
+</head>
+<body>
+  <div class="topbar"></div>
+  <main class="wrap">
+    <figure class="card hero">
+      <div class="frame"><img src="images/gold-bars.jpg" alt="Stack of gold bars"></div>
+    </figure>
+
+    <section class="grid" aria-label="Precious metals and gemstones">
+      <figure class="card"><div class="frame"><img src="images/silver-bullion.jpg" alt="Silver bullion bars" loading="lazy"></div></figure>
+      <figure class="card"><div class="frame"><img src="images/diamond.jpg" alt="Cut diamond" loading="lazy"></div></figure>
+      <figure class="card"><div class="frame"><img src="images/gold-nuggets.jpg" alt="Raw gold nuggets" loading="lazy"></div></figure>
+      <figure class="card"><div class="frame"><img src="images/ruby.jpg" alt="Ruby gemstone" loading="lazy"></div></figure>
+      <figure class="card"><div class="frame"><img src="images/emerald.jpg" alt="Emerald gemstone" loading="lazy"></div></figure>
+      <figure class="card"><div class="frame"><img src="images/sapphire.jpg" alt="Sapphire gemstone" loading="lazy"></div></figure>
+    </section>
+  </main>
+
+  <footer>
+    <a href="mailto:contact@preciousmetalsusa.com">contact@preciousmetalsusa.com</a>
+  </footer>
+  <script>
+    // If an image fails to load, try other common filenames/extensions before giving up.
+    (function () {
+      var exts = ['jpg', 'jpeg', 'png', 'webp', 'JPG', 'JPEG', 'PNG'];
+      var extra = { 'diamond': ['Diamond', 'cut-diamond', 'cut_diamond', 'diamond1'] };
+      document.querySelectorAll('.card img').forEach(function (img) {
+        var m = img.getAttribute('src').match(/^(.*\/)([^\/]+)\.[A-Za-z]+$/);
+        if (!m) return;
+        var names = [m[2]].concat(extra[m[2]] || []);
+        var tries = [];
+        names.forEach(function (n) { exts.forEach(function (e) { tries.push(m[1] + n + '.' + e); }); });
+        var i = 0;
+        img.addEventListener('error', function () {
+          while (i < tries.length && tries[i] === img.getAttribute('src')) i++;
+          if (i < tries.length) img.src = tries[i++];
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
