@@ -14,8 +14,10 @@
     --accent: #b08d3c;
     --gap: 20px;
   }
-  * { box-sizing: border-box; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html { -webkit-text-size-adjust: 100%; }
   body {
+    overflow-x: hidden;
     margin: 0;
     background: var(--bg);
     color: var(--ink);
@@ -41,11 +43,13 @@
     object-fit: cover; display: block;
     transition: transform .6s ease, filter .6s ease;
   }
-  .card:hover, .card:focus-within {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 24px rgba(20, 35, 60, .22), 0 0 14px rgba(176, 141, 60, .45);
+  @media (hover: hover) {
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 24px rgba(20, 35, 60, .22), 0 0 14px rgba(176, 141, 60, .45);
+    }
+    .card:hover img { transform: scale(1.06); filter: brightness(1.05) saturate(1.08); }
   }
-  .card:hover img { transform: scale(1.06); filter: brightness(1.05) saturate(1.08); }
 
   @keyframes shimmer {
     0%   { background-position: 0% 50%; }
@@ -67,11 +71,11 @@
   footer a {
     display: inline-block;
     max-width: 100%;
-    overflow-wrap: anywhere;
+    white-space: nowrap;
     font-family: Georgia, "Times New Roman", serif;
     font-weight: 700;
-    font-size: clamp(1.3rem, 5.4vw, 3.2rem);
-    letter-spacing: .03em;
+    font-size: clamp(.8rem, 5.6vw, 3.2rem);
+    letter-spacing: .02em;
     text-decoration: none;
     padding-bottom: 10px;
     color: #e9d28a;
@@ -84,16 +88,22 @@
     border-bottom: 2px solid var(--accent);
     transition: transform .3s ease, filter .3s ease;
   }
-  footer a:hover, footer a:focus-visible {
-    transform: translateY(-3px);
-    filter: drop-shadow(0 0 10px rgba(233, 210, 138, .55));
-    outline: none;
+  footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
+  @media (hover: hover) {
+    footer a:hover {
+      transform: translateY(-3px);
+      filter: drop-shadow(0 0 10px rgba(233, 210, 138, .55));
+    }
   }
 
   @media (max-width: 800px) { .grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 480px) {
-    .grid { grid-template-columns: 1fr; }
-    .hero { aspect-ratio: 16 / 9; }
+  @media (max-width: 600px) {
+    :root { --gap: 10px; }
+    .wrap { padding: 20px 12px 0; }
+    .hero { aspect-ratio: 16 / 10; }
+    footer { margin-top: 36px; padding: 44px 12px 52px; }
+    .mail-icon { width: 34px; height: 34px; margin-bottom: 14px; }
+    footer a { padding-bottom: 8px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .card, footer a { animation: none; }
